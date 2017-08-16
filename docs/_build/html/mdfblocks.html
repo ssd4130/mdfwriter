@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MDFBlocks.py &#8212; mdfwriter 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mdfwriter 1.0 documentation" href="index.html" />
+    <link rel="prev" title="MDF.py" href="mdf.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mdf.html" title="MDF.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">mdfwriter 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mdfblocks-py">
+<h1>MDFBlocks.py<a class="headerlink" href="#mdfblocks-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This file contains &#8220;non-public&#8221; classes that are used by the main project file mdf.py. The classes in this file contain the low-level block structure definitions that come directly from the MDF specification sheet provided by Vector. Link to MDF specification sheet &lt;<a class="reference external" href="https://vector.com/downloads/mdf_specification.pdf/">https://vector.com/downloads/mdf_specification.pdf/</a>&gt;</p>
+<dl class="class">
+<dt id="mdfblocks.IDBlock">
+<em class="property">class </em><code class="descclassname">mdfblocks.</code><code class="descname">IDBlock</code><a class="reference internal" href="_modules/mdfblocks.html#IDBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdfblocks.IDBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mdfblocks.HDBlock">
+<em class="property">class </em><code class="descclassname">mdfblocks.</code><code class="descname">HDBlock</code><span class="sig-paren">(</span><em>author</em>, <em>project</em>, <em>dut</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdfblocks.html#HDBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdfblocks.HDBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mdfblocks.TXBlock">
+<em class="property">class </em><code class="descclassname">mdfblocks.</code><code class="descname">TXBlock</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdfblocks.html#TXBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdfblocks.TXBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mdfblocks.DGBlock">
+<em class="property">class </em><code class="descclassname">mdfblocks.</code><code class="descname">DGBlock</code><a class="reference internal" href="_modules/mdfblocks.html#DGBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdfblocks.DGBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mdfblocks.CGBlock">
+<em class="property">class </em><code class="descclassname">mdfblocks.</code><code class="descname">CGBlock</code><span class="sig-paren">(</span><em>dgBlock</em>, <em>recordID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdfblocks.html#CGBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdfblocks.CGBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mdfblocks.CNBlock">
+<em class="property">class </em><code class="descclassname">mdfblocks.</code><code class="descname">CNBlock</code><span class="sig-paren">(</span><em>cg</em>, <em>channelType</em>, <em>signalName=''</em>, <em>signalDescription=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdfblocks.html#CNBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdfblocks.CNBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mdfblocks.CCBlock">
+<em class="property">class </em><code class="descclassname">mdfblocks.</code><code class="descname">CCBlock</code><span class="sig-paren">(</span><em>cn</em>, <em>unit</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdfblocks.html#CCBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdfblocks.CCBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mdfblocks.CEBlock">
+<em class="property">class </em><code class="descclassname">mdfblocks.</code><code class="descname">CEBlock</code><span class="sig-paren">(</span><em>canID</em>, <em>canIndex</em>, <em>messageName</em>, <em>senderName</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdfblocks.html#CEBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdfblocks.CEBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MDFBlocks.py</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mdf.html"
+                        title="previous chapter">MDF.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mdfblocks.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mdf.html" title="MDF.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">mdfwriter 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Samuel Daleo, III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

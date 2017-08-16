@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MDF.py &#8212; mdfwriter 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mdfwriter 1.0 documentation" href="index.html" />
+    <link rel="next" title="MDFBlocks.py" href="mdfblocks.html" />
+    <link rel="prev" title="mdfwriter: A python tool to generate .mdf files for long-term data storage" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mdfblocks.html" title="MDFBlocks.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="mdfwriter: A python tool to generate .mdf files for long-term data storage"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">mdfwriter 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mdf-py">
+<h1>MDF.py<a class="headerlink" href="#mdf-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The main file in the mdfwriter package. Using the MDF class, a programmer can create an MDF object and add the necessary &#8220;ChannelGroup&#8221; objects that contain &#8220;Channel&#8221; objects to the MDF object. An MDF object can also absorb/import a DEJ containing information about the CAN data that will be logged to the file.</p>
+<dl class="class">
+<dt id="mdf.ChannelGroup">
+<em class="property">class </em><code class="descclassname">mdf.</code><code class="descname">ChannelGroup</code><span class="sig-paren">(</span><em>name</em>, <em>description=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#ChannelGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.ChannelGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for non-CAN record groups to be added to MDF.
+:param name: The name of the Channel Group.</p>
+<dl class="method">
+<dt id="mdf.ChannelGroup.addChannel">
+<code class="descname">addChannel</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#ChannelGroup.addChannel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.ChannelGroup.addChannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for adding Channel object to ChannelGroup object. All Channel Objects must be added to the
+ChannelGroup before the ChannelGroup is added to the MDF.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.ChannelGroup.getCG">
+<code class="descname">getCG</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#ChannelGroup.getCG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.ChannelGroup.getCG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to get referenced CG object within the MDF file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.ChannelGroup.getSignalList">
+<code class="descname">getSignalList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#ChannelGroup.getSignalList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.ChannelGroup.getSignalList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to get the list of channels within a channel group.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mdf.Channel">
+<em class="property">class </em><code class="descclassname">mdf.</code><code class="descname">Channel</code><span class="sig-paren">(</span><em>name</em>, <em>units</em>, <em>description=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#Channel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class Channel.
+:param: name: Name of Channel
+:param: units: Units of Channel
+:param: description: Text description of Channel. Max 128 characters.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mdf.CANmsg">
+<em class="property">class </em><code class="descclassname">mdf.</code><code class="descname">CANmsg</code><span class="sig-paren">(</span><em>messageName</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#CANmsg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.CANmsg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for CAN messages to be added to MDF.
+Extends :class: ChannelGroup, and adds necessary properties for proper CAN data parsing in CANape.
+:param messageName: Name of CAN message</p>
+<dl class="method">
+<dt id="mdf.CANmsg.addSignal">
+<code class="descname">addSignal</code><span class="sig-paren">(</span><em>signal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#CANmsg.addSignal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.CANmsg.addSignal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to add a Signal object to the CANmsg object.
+Note: Can not pass parent of Signal object &#8216;Channel&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.CANmsg.getCGBlock">
+<code class="descname">getCGBlock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#CANmsg.getCGBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.CANmsg.getCGBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to get the CG object in the MDF file for reference when writing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.CANmsg.getSignalList">
+<code class="descname">getSignalList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#CANmsg.getSignalList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.CANmsg.getSignalList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to get the list of signals within a CAN message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mdf.CANSignal">
+<em class="property">class </em><code class="descclassname">mdf.</code><code class="descname">CANSignal</code><span class="sig-paren">(</span><em>name</em>, <em>description=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#CANSignal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.CANSignal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Child class of Channel with additional properties to make it compatabile with a CAN signal with a CAN mesasge.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mdf.DEJ">
+<em class="property">class </em><code class="descclassname">mdf.</code><code class="descname">DEJ</code><span class="sig-paren">(</span><em>dej_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#DEJ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.DEJ" title="Permalink to this definition">¶</a></dt>
+<dd><p>DEJ Class used to parse DEJ JSON file and store information as CANmsg objects with their respective CAN Signal objects.
+:param dej_path: Path to .json DEJ file</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mdf.MDF">
+<em class="property">class </em><code class="descclassname">mdf.</code><code class="descname">MDF</code><span class="sig-paren">(</span><em>filename</em>, <em>author</em>, <em>project</em>, <em>dut</em>, <em>filedescription='TextBlock'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main class of package. MDF object that holds all necessary information to write file correctly.
+:param filename: Name of file to be created (.mdf automatically appended)
+:param author: Creator of file
+:param project: Name of Project of test
+:param dut: Device under test
+Note Line 162: The initialization adds a blank ChannelGroup to the MDF file to avoid a bug with CANape. If the file
+contains only one ChannelGroup, it will be considered &#8220;sorted&#8221; and will not parse correctly.</p>
+<dl class="method">
+<dt id="mdf.MDF.addChannelGroup">
+<code class="descname">addChannelGroup</code><span class="sig-paren">(</span><em>newCG</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF.addChannelGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF.addChannelGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to add ChannelGroup object to MDF.
+All ChannelGroup objects (or CANmsg objects) must be added to MDF before file header is written.
+:param newCG: New ChannelGroup/CANmsg object to be added to MDF.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.MDF.closefile">
+<code class="descname">closefile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF.closefile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF.closefile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to close file once data is finished being written. Must be called, otherwise file will corrupt.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.MDF.defineStartTime">
+<code class="descname">defineStartTime</code><span class="sig-paren">(</span><em>timestamp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF.defineStartTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF.defineStartTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>To change timestamp in header. All time offsets in data block of file will reference this time.
+:param timestamp: HH:MM:SS</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.MDF.getEpochTime">
+<code class="descname">getEpochTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF.getEpochTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF.getEpochTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates MDF spec timestamp format to epoch time for conversion to time offset float value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.MDF.importDEJ">
+<code class="descname">importDEJ</code><span class="sig-paren">(</span><em>dej_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF.importDEJ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF.importDEJ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to import a DEJ into the MDF.
+:param dej_path: System path to .dej file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.MDF.openFile">
+<code class="descname">openFile</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF.openFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF.openFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically called upon instantation of MDF object.
+:param Name of file to be created.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.MDF.startfile">
+<code class="descname">startfile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF.startfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF.startfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to write header and respective pointers to tie everything together.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdf.MDF.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>channelGroupName</em>, <em>timestamp</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mdf.html#MDF.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdf.MDF.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to write data record to file. Only to be called once file is open and header is written.
+:param cg: Reference to CG associated with data
+:param timestamp: Decimal offset from timestamp in header
+:param value: Either raw CAN message data from CAN bus, or a List [] of data for each signal in ChannelGroup</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MDF.py</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">mdfwriter: A python tool to generate .mdf files for long-term data storage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mdfblocks.html"
+                        title="next chapter">MDFBlocks.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mdf.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mdfblocks.html" title="MDFBlocks.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="mdfwriter: A python tool to generate .mdf files for long-term data storage"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">mdfwriter 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Samuel Daleo, III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>
