@@ -2,7 +2,7 @@
 can result in writing a corrupt file.
 Author: Samuel Daleo, III"""
 import time
-from utils import formatstring
+from .utils import formatstring
 
 
 class IDBlock:
@@ -14,7 +14,7 @@ class IDBlock:
     VERSIONNO = 331
     RESERVED = formatstring("", 34)
     BLOCKSIZE = 64
-    
+
     def __init__(self):
         pass
 
@@ -23,7 +23,7 @@ class HDBlock:
     BLOCKID = "HD"
     BLOCKSIZE = 164
     ORG = "TESLA                           "
-    
+
     def __init__(self, author, project, dut):
         self.firstDGPointer = 228
         self.firstTXPointer = 228
@@ -38,7 +38,7 @@ class HDBlock:
 
 class TXBlock:
     BLOCKID = "TX"
-    
+
     def __init__(self, text):
         self.text = text
         self.blocksize = len(text) + 4
@@ -47,7 +47,7 @@ class TXBlock:
 class DGBlock:
     BLOCKID = "DG"
     BLOCKSIZE = 28
-    
+
     def __init__(self):
         self.nextDGPointer = 0
         self.nextCGPointer = 256
@@ -60,7 +60,7 @@ class DGBlock:
 class CGBlock:
     BLOCKID = "CG"
     BLOCKSIZE = 26
-    
+
     def __init__(self, dg_block, record_id):
         self.cnBlockList = []
         self.nextCGPointer = 0
@@ -82,7 +82,7 @@ class CGBlock:
 class CNBlock:
     BLOCKID = "CN"
     BLOCKSIZE = 228
-    
+
     def __init__(self, cg, channel_type, signal_name=None, signal_description=None):
         self.nextCNPointer = 0
         self.CCPointer = 0
@@ -141,7 +141,7 @@ class CNBlock:
 
 class CCBlock:
     BLOCKID = "CC"
-    
+
     def __init__(self, cn, unit):
         self.valueRangeBool = 0    # 0 = false, 1 = true
         self.minValue = 0
@@ -163,7 +163,7 @@ class CEBlock:
     BLOCKID = "CE"
     BLOCKSIZE = 128
     EXTENSIONID = 19
-    
+
     def __init__(self, can_id, can_index, message_name, sender_name):
         self.canID = can_id
         self.canIndex = can_index
