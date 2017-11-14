@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mdfblocks &#8212; mdfwriter 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="mdfwriter 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">mdfwriter 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for mdfblocks</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;This file contains the block structures for the MDF file to be written correctly. Altering contents of file</span>
+<span class="sd">can result in writing a corrupt file.</span>
+<span class="sd">Author: Samuel Daleo, III&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">_truncateString</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This method truncates strings to specified length and makes sure they are delimited with correct MDF spec delimiter (NULL).&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">limit</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">limit</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">limit</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">limit</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<div class="viewcode-block" id="IDBlock"><a class="viewcode-back" href="../mdfblocks.html#mdfblocks.IDBlock">[docs]</a><span class="k">class</span> <span class="nc">IDBlock</span><span class="p">:</span>
+    <span class="n">FILEID</span> <span class="o">=</span> <span class="s2">&quot;MDF     &quot;</span>
+    <span class="n">FORMATID</span> <span class="o">=</span> <span class="s2">&quot;3.30    &quot;</span>
+    <span class="n">PROGRAMID</span> <span class="o">=</span> <span class="s2">&quot;SAMDALEO&quot;</span>
+    <span class="n">BYTEORDER</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">FLOATFORMAT</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">VERSIONNO</span> <span class="o">=</span> <span class="mi">330</span>
+    <span class="n">RESERVED</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">34</span><span class="p">)</span>
+    <span class="n">BLOCKSIZE</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="HDBlock"><a class="viewcode-back" href="../mdfblocks.html#mdfblocks.HDBlock">[docs]</a><span class="k">class</span> <span class="nc">HDBlock</span><span class="p">:</span>
+    <span class="n">BLOCKID</span> <span class="o">=</span> <span class="s2">&quot;HD&quot;</span>
+    <span class="n">BLOCKSIZE</span> <span class="o">=</span> <span class="mi">164</span>
+    <span class="n">ORG</span> <span class="o">=</span> <span class="s2">&quot;TESLA                           &quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">dut</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">firstDGPointer</span> <span class="o">=</span> <span class="mi">228</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">firstTXPointer</span> <span class="o">=</span> <span class="mi">228</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">firstPRPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numberOfDGs</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="s2">&quot;%m&quot;</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="s2">&quot;%Y&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">author</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dut</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">dut</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TXBlock"><a class="viewcode-back" href="../mdfblocks.html#mdfblocks.TXBlock">[docs]</a><span class="k">class</span> <span class="nc">TXBlock</span><span class="p">:</span>
+    <span class="n">BLOCKID</span> <span class="o">=</span> <span class="s2">&quot;TX&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocksize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span></div>
+
+<div class="viewcode-block" id="DGBlock"><a class="viewcode-back" href="../mdfblocks.html#mdfblocks.DGBlock">[docs]</a><span class="k">class</span> <span class="nc">DGBlock</span><span class="p">:</span>
+    <span class="n">BLOCKID</span> <span class="o">=</span> <span class="s2">&quot;DG&quot;</span>
+    <span class="n">BLOCKSIZE</span> <span class="o">=</span> <span class="mi">28</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nextDGPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nextCGPointer</span> <span class="o">=</span> <span class="mi">256</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reserved</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numberofCGs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numberofRecordIDs</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#Record ID before each data record</span></div>
+
+<div class="viewcode-block" id="CGBlock"><a class="viewcode-back" href="../mdfblocks.html#mdfblocks.CGBlock">[docs]</a><span class="k">class</span> <span class="nc">CGBlock</span><span class="p">:</span>
+    <span class="n">BLOCKID</span> <span class="o">=</span> <span class="s2">&quot;CG&quot;</span>
+    <span class="n">BLOCKSIZE</span> <span class="o">=</span> <span class="mi">26</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dgBlock</span><span class="p">,</span> <span class="n">recordID</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnBlockList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nextCGPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CNPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TXPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recordID</span> <span class="o">=</span> <span class="n">recordID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numberOfChannels</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataSize</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numberOfRecords</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">isCAN</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">dgBlock</span><span class="o">.</span><span class="n">numberofCGs</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">addChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cnBlockList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CNBlock"><a class="viewcode-back" href="../mdfblocks.html#mdfblocks.CNBlock">[docs]</a><span class="k">class</span> <span class="nc">CNBlock</span><span class="p">:</span>
+    <span class="n">BLOCKID</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span>
+    <span class="n">BLOCKSIZE</span> <span class="o">=</span> <span class="mi">228</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cg</span><span class="p">,</span> <span class="n">channelType</span><span class="p">,</span> <span class="n">signalName</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">signalDescription</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nextCNPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CCPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CEPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reserved</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TXPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channelTitle</span> <span class="o">=</span> <span class="n">channelType</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signalName</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">32</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signalDescription</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">128</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numberOfBits</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">firstBitNo</span> <span class="o">=</span> <span class="mi">64</span>
+        <span class="k">if</span> <span class="n">channelType</span> <span class="o">==</span> <span class="s2">&quot;TIME&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channelType</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">numberOfBits</span> <span class="o">=</span> <span class="mi">64</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">firstBitNo</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalName</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="s2">&quot;TimeChannel&quot;</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalDescription</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">signalDescription</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalType</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">elif</span> <span class="n">channelType</span> <span class="o">==</span> <span class="s2">&quot;DATA&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channelType</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalName</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">signalName</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalDescription</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">signalDescription</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalType</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">numberOfBits</span> <span class="o">=</span> <span class="mi">32</span>
+            <span class="n">startBit</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cg</span><span class="o">.</span><span class="n">cnBlockList</span><span class="p">)):</span>
+                <span class="n">startBit</span> <span class="o">=</span> <span class="n">startBit</span> <span class="o">+</span> <span class="n">cg</span><span class="o">.</span><span class="n">cnBlockList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">numberOfBits</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">firstBitNo</span> <span class="o">=</span> <span class="n">startBit</span>
+        <span class="k">elif</span> <span class="n">channelType</span> <span class="o">==</span> <span class="s2">&quot;CAN&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channelType</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalName</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">signalName</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalDescription</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">signalDescription</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalType</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">numberOfBits</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">firstBitNo</span> <span class="o">=</span> <span class="mi">64</span>
+        <span class="k">elif</span> <span class="n">channelType</span> <span class="o">==</span> <span class="s2">&quot;STRING&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channelType</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">signalName</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">signalName</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalDescription</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">signalDescription</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signalType</span> <span class="o">=</span> <span class="mi">7</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">firstBitNo</span> <span class="o">=</span> <span class="mi">64</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valueRangeBool</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># 0 = false, 1 = true</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minValue</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxValue</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sampleRate</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ASAMPointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TXPointer2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">byteOffset</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="CCBlock"><a class="viewcode-back" href="../mdfblocks.html#mdfblocks.CCBlock">[docs]</a><span class="k">class</span> <span class="nc">CCBlock</span><span class="p">:</span>
+    <span class="n">BLOCKID</span> <span class="o">=</span> <span class="s2">&quot;CC&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cn</span><span class="p">,</span> <span class="n">unit</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valueRangeBool</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># 0 = false, 1 = true</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minValue</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxValue</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conversionID</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># 0 = parametric, linear, 11 = VTAB</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blockSize</span> <span class="o">=</span> <span class="mi">46</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">physUnit</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cn</span><span class="o">.</span><span class="n">channelTitle</span> <span class="o">==</span> <span class="s2">&quot;TIME&quot;</span> <span class="ow">or</span> <span class="n">cn</span><span class="o">.</span><span class="n">channelTitle</span> <span class="o">==</span> <span class="s2">&quot;DATA&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paramList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pairs</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blockSize</span> <span class="o">=</span> <span class="mi">62</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paramList</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pairs</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blockSize</span> <span class="o">=</span> <span class="mi">46</span></div>
+
+<div class="viewcode-block" id="CEBlock"><a class="viewcode-back" href="../mdfblocks.html#mdfblocks.CEBlock">[docs]</a><span class="k">class</span> <span class="nc">CEBlock</span><span class="p">:</span>
+    <span class="n">BLOCKID</span> <span class="o">=</span> <span class="s2">&quot;CE&quot;</span>
+    <span class="n">BLOCKSIZE</span> <span class="o">=</span> <span class="mi">128</span>
+    <span class="n">EXTENSIONID</span> <span class="o">=</span> <span class="mi">19</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canID</span><span class="p">,</span> <span class="n">canIndex</span><span class="p">,</span> <span class="n">messageName</span><span class="p">,</span> <span class="n">senderName</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canID</span> <span class="o">=</span> <span class="n">canID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canIndex</span> <span class="o">=</span> <span class="n">canIndex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">messageName</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">messageName</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">senderName</span> <span class="o">=</span> <span class="n">_truncateString</span><span class="p">(</span><span class="n">senderName</span><span class="p">,</span> <span class="mi">78</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">mdfwriter 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Samuel Daleo, III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>
