@@ -5,7 +5,7 @@ import struct
 import json
 import threading
 import logging
-from mdfblocks import *
+from .mdfblocks import *
 
 # This dictionary contains the format codes for the struct package to correctly format the binary output of input python
 # datatypes.
@@ -147,7 +147,7 @@ class DEJ(object):
 
 class MDF(object):
     HEADER_SIZE = 228  # bytes
-    
+
     def __init__(self, file_name, author, project, dut, file_description=None):
         self.IDBlock = IDBlock()
         self.HDBlock = HDBlock(author, project, dut)
@@ -173,7 +173,7 @@ class MDF(object):
         # self.blankChannelGroup = ChannelGroup('Blank Channel Group')
         # self.addChannelGroup(self.blankChannelGroup)   #See docstring
         """Main class of package. MDF object that holds all necessary information to write file correctly.
-            Note Line 170: The initialization adds a blank ChannelGroup to the MDF file to avoid a bug with CANape. 
+            Note Line 170: The initialization adds a blank ChannelGroup to the MDF file to avoid a bug with CANape.
             If the file contains only one ChannelGroup, it will be considered "sorted" and will not parse correctly.
         :param str filename: Name of file to be created (.mdf automatically appended)
         :param str author: Creator of file
@@ -254,7 +254,7 @@ class MDF(object):
             logger.debug(str(file_name) + ".mdf created @" + str(time.strftime("%X")))
         elif self.fileIndex > 1:
             self.file = open(str(file_name + str(self.fileIndex) + ".mdf"), 'wb+')
-            logger.debug(str(file_name) + str(self.fileIndex) + ".mdf created @" 
+            logger.debug(str(file_name) + str(self.fileIndex) + ".mdf created @"
                          + str(time.strftime("%X")))
         return self.file
 
@@ -292,7 +292,7 @@ class MDF(object):
         """Method to write data record to file. Only to be called once file is open and header is written.
         :param str channelgroup_name: Name of ChannelGroup object in which the data belongs to.
         :param int timestamp_offset: Decimal offset from timestamp in header.
-        :param list value: Either raw CAN message data from CAN bus, or a List [] 
+        :param list value: Either raw CAN message data from CAN bus, or a List []
         of data for each signal in ChannelGroup"""
         string_size_limit = 32
         file_size_limit = 1000000000  # bytes, 1000000000 == 1 GB
